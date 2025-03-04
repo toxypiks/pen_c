@@ -6,12 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-set(MAIN
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/main.c
+set(EXAMPLE_SRC
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/example.c
   )
 
-add_executable(main)
-target_sources(main
+add_executable(example)
+target_sources(example
  PRIVATE
-  ${MAIN}
+  ${EXAMPLE_SRC}
 )
