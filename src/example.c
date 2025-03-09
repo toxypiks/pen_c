@@ -29,7 +29,7 @@ void olivec_fill_circle(uint32_t *pixels, size_t pixels_width, size_t pixels_hei
                     int dx = x - cx;
                     int dy = y - cy;
                     if (dx*dx + dy*dy <= r*r) {
-                        pixels[y*pixels_height + x] = color;
+                        pixels[y*pixels_width + x] = color;
                     }
                 }
             }
