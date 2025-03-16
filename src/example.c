@@ -64,16 +64,25 @@ bool checker_example(void)
     return true;
 }
 
+float lerpf(float a, float b, float t)
+{
+    return a + (b - a)*t;
+}
+
 bool circle_example(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
     for (int y = 0; y < ROWS; ++y) {
         for (int x = 0; x < COLS; ++x) {
+            float u = (float)x/COLS;
+            float v = (float)y/ROWS;
+            float t = (u + v)/2;
+
             size_t radius = CELL_WIDTH;
             if (CELL_HEIGHT < radius) radius = CELL_HEIGHT;
             olivec_fill_circle(pixels, WIDTH, HEIGHT,
-                               x*CELL_WIDTH + CELL_WIDTH/2, y*CELL_HEIGHT + CELL_HEIGHT/2, radius/2,
+                               x*CELL_WIDTH + CELL_WIDTH/2, y*CELL_HEIGHT + CELL_HEIGHT/2, (size_t)lerpf(radius/4, radius/2, t),
                                FOREGROUND_COLOR);
         }
     }
