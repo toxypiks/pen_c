@@ -29,15 +29,16 @@ void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height,
 {
     // y = k*x + c
     //
-    // y1 = k*x1 + c
+    //  y1 = k*x1 + c
     // y2 = k*x2 + c
-    //
+    //c
     // y1 - k*x1 = c
     // y2        = k*x2 + y1 - k*x1
     // y2        = k*(x2 - x1) + y1
     // y2 - y1 = k*(x2 - x1)
     // (y2 -y1)/(x2 - x1) = k
 
+    // calc k ~ dy/dx
     int dx = x2 - x1;
     int dy = y2 - y1;
 
@@ -47,7 +48,8 @@ void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height,
         if (x1 > x2) swap_int(&x1, &x2);
         for (int x = x1; x <= x2; ++x) {
             int y = dy*x/dx + c;
-            if (0 <= x && x < (int)pixel_width) {
+            if (0 <= x && x < (int)pixel_width
+                && 0 <= y && y < (int)pixel_height) {
                 pixels[y*pixel_width + x] = color;
             }
         }
@@ -55,7 +57,7 @@ void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height,
         //dx = 0 -> vertical line
         int x = x1;
         if (0 <= x && x < (int)pixel_width) {
-            if (y1 < y2) swap_int(&y1, &y2);
+            if (y1 > y2) swap_int(&y1, &y2);
             for (int y = y1; y <= y2; ++y ) {
                 if (0 <= y && y < (int)pixel_height) {
                     pixels[y*pixel_width + x] = color;
@@ -127,10 +129,18 @@ bool lines_example(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
-    olivec_draw_line(pixels, WIDTH, HEIGHT,
-                          0, 0, WIDTH, HEIGHT,
-                          FOREGROUND_COLOR);
+    // void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height, int x1, int y1, int x2, int y2, uint32_t color)
+    //olivec_draw_line(pixels, WIDTH, HEIGHT,
+    //                      0, 0, WIDTH, HEIGHT,
+    //                      FOREGROUND_COLOR);
+//
+    //olivec_draw_line(pixels, WIDTH, HEIGHT,
+    //                      WIDTH, 0, 0, HEIGHT,
+    //                      FOREGROUND_COLOR);
 
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      0, 0, WIDTH/2, HEIGHT,
+                      FOREGROUND_COLOR);
     const char *file_path = "../lines.ppm";
     Errno err = olivec_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
     if (err) {
