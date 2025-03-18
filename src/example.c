@@ -47,10 +47,15 @@ void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height,
 
         if (x1 > x2) swap_int(&x1, &x2);
         for (int x = x1; x <= x2; ++x) {
-            int y = dy*x/dx + c;
-            if (0 <= x && x < (int)pixel_width
-                && 0 <= y && y < (int)pixel_height) {
-                pixels[y*pixel_width + x] = color;
+            if (0 <= x && x < (int)pixel_width) {
+                int sy1 = dy*x/dx + c;
+                int sy2 = dy*(x + 1)/dx + c;
+                if (sy1 > sy2) swap_int(&sy1, &sy2);
+                for (int y = sy1; y <= sy2; ++y) {
+                    if (0 <= y && y < (int)pixel_height) {
+                        pixels[y*pixel_width + x] = color;
+                    }
+                }
             }
         }
     } else {
@@ -130,17 +135,17 @@ bool lines_example(void)
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
     // void olivec_draw_line(uint32_t *pixels, size_t pixel_width, size_t pixel_height, int x1, int y1, int x2, int y2, uint32_t color)
-    //olivec_draw_line(pixels, WIDTH, HEIGHT,
-    //                      0, 0, WIDTH, HEIGHT,
-    //                      FOREGROUND_COLOR);
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                          0, 0, WIDTH, HEIGHT,
+                          FOREGROUND_COLOR);
 //
     //olivec_draw_line(pixels, WIDTH, HEIGHT,
     //                      WIDTH, 0, 0, HEIGHT,
     //                      FOREGROUND_COLOR);
 
     olivec_draw_line(pixels, WIDTH, HEIGHT,
-                      0, 0, WIDTH/2, HEIGHT,
-                      FOREGROUND_COLOR);
+                      WIDTH, 0, WIDTH/4*3, HEIGHT,
+                      0xFF20FF20);
     const char *file_path = "../lines.ppm";
     Errno err = olivec_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
     if (err) {
