@@ -15,3 +15,21 @@ target_sources(example
  PRIVATE
   ${EXAMPLE_SRC}
 )
+
+target_link_libraries(example
+  m
+  )
+
+set(TEST_SRC
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/test.c
+  )
+
+add_executable(test)
+target_sources(test
+ PRIVATE
+  ${TEST_SRC}
+)
+
+target_link_libraries(test
+  m
+  )
