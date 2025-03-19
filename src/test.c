@@ -34,7 +34,7 @@
 #define BLUE_COLOR 0xFFAA2020
 #define ERROR_COLOR 0xFFFF00FF
 
-#define TEST_DIR_PATH "./test"
+#define TEST_DIR_PATH "../test"
 
 char hexchar(uint8_t x)
 {
