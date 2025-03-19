@@ -138,14 +138,35 @@ bool lines_example(void)
     olivec_draw_line(pixels, WIDTH, HEIGHT,
                           0, 0, WIDTH, HEIGHT,
                           FOREGROUND_COLOR);
-//
-    //olivec_draw_line(pixels, WIDTH, HEIGHT,
-    //                      WIDTH, 0, 0, HEIGHT,
-    //                      FOREGROUND_COLOR);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                          WIDTH, 0, 0, HEIGHT,
+                          FOREGROUND_COLOR);
 
     olivec_draw_line(pixels, WIDTH, HEIGHT,
                       WIDTH, 0, WIDTH/4*3, HEIGHT,
                       0xFF20FF20);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      WIDTH/4*3, 0, WIDTH, HEIGHT,
+                      0xFF20FF20);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      WIDTH/4, 0, 0, HEIGHT,
+                      0xFF20FF20);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      0, 0, WIDTH/4, HEIGHT,
+                      0xFF20FF20);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      0, HEIGHT/2, WIDTH, HEIGHT/2,
+                      0xFFFF2020);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT,
+                      WIDTH/2, 0, WIDTH/2, HEIGHT,
+                      0xFFFF2020);
+
     const char *file_path = "../lines.ppm";
     Errno err = olivec_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
     if (err) {
