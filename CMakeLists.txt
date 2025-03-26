@@ -33,3 +33,4 @@ target_sources(test
 target_link_libraries(test
   m
   )
+add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
