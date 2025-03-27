@@ -166,20 +166,20 @@ void test_fill_triangle(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
     int radius = 10;
-    uint32_t color = RED_COLOR;
+    uint32_t marker_color = GREEN_COLOR;
     int x1 = WIDTH/2,     y1 = HEIGHT/8;
     int x2 = WIDTH/8,     y2 = HEIGHT/2;
     int x3 = WIDTH*7/8,   y3 = HEIGHT*7/8;
 
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x1, y1, radius, color);
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x2, y2, radius, color);
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x3, y3, radius, color);
+    olivec_fill_circle(pixels, WIDTH, HEIGHT, x1, y1, radius, marker_color);
+    olivec_fill_circle(pixels, WIDTH, HEIGHT, x2, y2, radius, marker_color);
+    olivec_fill_circle(pixels, WIDTH, HEIGHT, x3, y3, radius, marker_color);
 
     olivec_fill_triangle(pixels, WIDTH, HEIGHT,
                           x1, y1,
                           x2, y2,
                           x3, y3,
-                          color);
+                          RED_COLOR);
 }
 
 Test_Case test_cases[] = {
