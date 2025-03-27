@@ -123,20 +123,6 @@ void olivec_sort_triangle_points_by_y(int *x1, int *y1, int *x2, int *y2, int *x
     }
 }
 
-bool olivec_line_of_segment(int x1, int y1, int x2, int y2, int *k, int *c)
-{
-    int dx = x2 - x1;
-    int dy = y2 - y1;
-
-    if (dx == 0) return false;
-
-    *k = dy/dx;
-    *c = y1 - dy*x1/dx;
-
-
-    return true;
-}
-
 void olivec_fill_triangle(uint32_t *pixels, size_t width, size_t height,
                           int x1, int y1,
                           int x2, int y2,
@@ -144,15 +130,20 @@ void olivec_fill_triangle(uint32_t *pixels, size_t width, size_t height,
                           uint32_t color)
 {
     olivec_sort_triangle_points_by_y(&x1, &y1, &x2, &y2, &x3, &y3);
-    int k12, c12;
-    if (olivec_line_of_segment(x1, y1, x2, y2, &k12, &c12)) {
-        int k23, c23;
-        if (olivec_line_of_segment(x2, y2, x3, y3, &k23, &c23)) {
+    if (x1 != x2) {
+        int dx12 = x2 - x1;
+        int dy12 = y2 - y1;
+        int c12 = y1 - x1*dy12/dx12;
+
+        if (x1 != x3) {
+            int dx13 = x3 - x1;
+            int dy13 = y3 - y1;
+            int c13 = y3 - x3*dy13/dx13;
             for (int y = y1; y <= y2; ++y) {
                 if (0 <= y && (size_t)y < height) {
                     // (y - c)/k = x
-                    int s1 = (y - c12)/k12;
-                    int s2 = (y - c23)/k23;
+                    int s1 = (y - c12)*dx12/dy12;
+                    int s2 = (y - c13)*dx13/dy13;
                     if (s1 > s2) OLIVEC_SWAP(int, s1, s2);
                     for (int x = s1; x <= s2; ++x) {
                         if (0 <= x && (size_t)x < width) {
