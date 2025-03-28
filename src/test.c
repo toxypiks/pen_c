@@ -5,10 +5,10 @@
 #include <errno.h>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
+#include "./stb_image_write.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "./stb_image.h"
 
 #include "olive.c"
 
@@ -107,6 +107,7 @@ bool replay_test_case(const char *program_path, const char *file_path, const cha
             }
         }
 
+        // TODO: save the actual image along with the diff
         if (failed) {
             fprintf(stderr, "%s: TEST FAILURE: unexpected pixels in generated image\n", file_path);
             if (!stbi_write_png(failure_file_path, WIDTH, HEIGHT, 4, pixels, sizeof(uint32_t)*WIDTH)) {
@@ -160,26 +161,33 @@ void test_draw_line(void)
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
     olivec_draw_line(pixels, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, RED_COLOR);
     olivec_draw_line(pixels, WIDTH, HEIGHT, WIDTH, 0, 0, HEIGHT, BLUE_COLOR);
+    olivec_draw_line(pixels, WIDTH, HEIGHT, WIDTH/2, 0, WIDTH/2, HEIGHT, GREEN_COLOR);
 }
 
 void test_fill_triangle(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
-    int radius = 10;
-    uint32_t marker_color = GREEN_COLOR;
-    int x1 = WIDTH/2,     y1 = HEIGHT/8;
-    int x2 = WIDTH/8,     y2 = HEIGHT/2;
-    int x3 = WIDTH*7/8,   y3 = HEIGHT*7/8;
 
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x1, y1, radius, marker_color);
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x2, y2, radius, marker_color);
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, x3, y3, radius, marker_color);
+    {
+        int x1 = WIDTH/2, y1 = HEIGHT/8;
+        int x2 = WIDTH/8, y2 = HEIGHT/2;
+        int x3 = WIDTH*7/8, y3 = HEIGHT*7/8;
+        olivec_fill_triangle(pixels, WIDTH, HEIGHT, x1, y1, x2, y2, x3, y3, RED_COLOR);
+    }
 
-    olivec_fill_triangle(pixels, WIDTH, HEIGHT,
-                          x1, y1,
-                          x2, y2,
-                          x3, y3,
-                          RED_COLOR);
+    {
+        int x1 = WIDTH/2, y1 = HEIGHT*2/8;
+        int x2 = WIDTH*2/8, y2 = HEIGHT/2;
+        int x3 = WIDTH*6/8, y3 = HEIGHT/2;
+        olivec_fill_triangle(pixels, WIDTH, HEIGHT, x1, y1, x2, y2, x3, y3, GREEN_COLOR);
+    }
+
+    {
+        int x1 = WIDTH/8, y1 = HEIGHT/8;
+        int x2 = WIDTH/8, y2 = HEIGHT*3/8;
+        int x3 = WIDTH*3/8, y3 = HEIGHT*3/8;
+        olivec_fill_triangle(pixels, WIDTH, HEIGHT, x1, y1, x2, y2, x3, y3, BLUE_COLOR);
+    }
 }
 
 Test_Case test_cases[] = {
