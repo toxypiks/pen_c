@@ -2,6 +2,7 @@
 #define OLIVE_C_
 
 #include <stdint.h>
+#include <stddef.h>
 
 #define OLIVEC_SWAP(T, a, b) do { T t = a; a = b; b = t; } while (0)
 #define OLIVEC_SIGN(T, x) ((T)((x) > 0) - (T)((x) < 0))

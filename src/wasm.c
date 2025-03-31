@@ -1,7 +1,7 @@
 #include "olive.c"
 
 #define WIDTH 800
-#define WEIGHT 600
+#define HEIGHT 600
 
 uint32_t pixels[WIDTH*HEIGHT];
 

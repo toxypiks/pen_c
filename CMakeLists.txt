@@ -29,8 +29,9 @@ target_sources(test
  PRIVATE
   ${TEST_SRC}
 )
-
 target_link_libraries(test
   m
   )
 add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
+
+add_subdirectory(./html)
