@@ -7,17 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(../include)
 
 set(CMAKE_C_COMPILER clang)
-set(CMAKE_C_LINK_EXECUTABLE wasm-ld)
 set(WASM_SRC
   ${CMAKE_CURRENT_SOURCE_DIR}/../src/wasm.c
 )
 
-#add_executable(wasm)
-add_library(wasm OBJECT)
+add_executable(wasm)
 target_sources(wasm
   PRIVATE
   ${WASM_SRC}
 )
 set_target_properties(wasm PROPERTIES COMPILE_FLAGS "-Wall -Wextra --target=wasm32")
-set_target_properties(wasm PROPERTIES LINK_FLAGS    "-m wasm32 --no-entry --export-all --allow-undefined")
+set(CMAKE_C_LINK_EXECUTABLE "wasm-ld -m wasm32 --no-entry --export-all --allow-undefined <FLAGS> <CMAKE_C_LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 set_target_properties(wasm PROPERTIES OUTPUT_NAME "wasm.wasm")
+target_link_libraries(wasm)
