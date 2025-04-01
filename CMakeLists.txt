@@ -34,4 +34,4 @@ target_link_libraries(test
   )
 add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
 
-add_subdirectory(./html)
+add_subdirectory(./wasm)
