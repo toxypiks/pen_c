@@ -1,0 +1,24 @@
+server.port   = 6969
+server.username   = "http"
+server.groupname  = "http"
+#server.document-root  = "/path/to/html"
+server.document-root = "@html_path_string@/html"
+index-file.names = ( "index.html" )
+dir-listing.activate  = "enable"
+mimetype.assign   = (
+        ".html" => "text/html",
+        ".txt" => "text/plain",
+        ".css" => "text/css",
+        ".js" => "application/x-javascript",
+        ".jpg" => "image/jpeg",
+        ".jpeg" => "image/jpeg",
+        ".gif" => "image/gif",
+        ".png" => "image/png",
+        ".wasm" => "application/wasm",
+        "" => "application/octet-stream"
+        )
+server.modules = (
+   "mod_access",
+   "mod_accesslog",
+   "mod_fastcgi"
+)
